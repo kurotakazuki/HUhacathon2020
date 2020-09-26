@@ -53,6 +53,7 @@
             <tr>
               <th>Id</th>
               <th>タイトル</th>
+              <th>日程</th>
               <th>参加者</th>
               <th>参加登録</th>
             </tr>
@@ -61,8 +62,8 @@
             <tr>
               <th>{{task.id}}</th>
               <td>{{task.title}}</td>
-              <td>{{task.participants}}
-              </td>
+              <td>{{task.schedule}}</td>
+              <td>{{task.participants}}</td>
               <td>
                 <form action="/game/{{task.id}}" class="inline" method="post"> <input type="hidden" name="_method" value="patch" /> <input type="text" class="input is-rounded is-small" name="participant" value="" placeholder="ニックネームを入力" />  </form>
               </td>
@@ -70,15 +71,64 @@
           </table>
       </div>
       <div class="column">
+<article class="panel is-primary">
+  <p class="panel-heading">
+    Game
+  </p>
+  <p class="panel-tabs">
+    <a class="is-active">All</a>
+    <a>今日</a>
+    <a>明日</a>
+    <a>広大学内</a>
+    <a>東広島運動公園</a>
+  </p>
+  <div class="panel-block">
+    <p class="control has-icons-left">
+      <input class="input is-primary" type="text" placeholder="検索">
+      <span class="icon is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+  </div>
+  <a class="panel-block is-active">
+    <span class="panel-icon">
+      <i class="fas fa-book" aria-hidden="true"></i>
+    </span>
+    おすすめ
+  </a>
+  <a class="panel-block">
+    <span class="panel-icon">
+      <i class="fas fa-book" aria-hidden="true"></i>
+    </span>
+    人気
+  </a>
+  <a class="panel-block">
+    <span class="panel-icon">
+      <i class="fas fa-book" aria-hidden="true"></i>
+    </span>
+    球技系
+  </a>
+  <a class="panel-block">
+    <span class="panel-icon">
+      <i class="fas fa-book" aria-hidden="true"></i>
+    </span>
+    武道
+  </a>
+</article>
+
+<hr style="border-top: 3px double #8c8b8b;">
+
         <form action="/game" method="post">
+            <div class="control mt-1 mb-4"> <input type="datetime-local" class="input" name="schedule" value="2020-09-26T08:30" autofocus /> </div>
           <div class="field has-addons">
             <div class="control"> <input type="text" class="input" placeholder="募集タイトル" name="title" id="title" value="" autofocus /> </div>
             <div class="control"> <input class="button is-primary" type="submit" value="募集"> </div>
           </div>
-          <div> {% if msg %} <small class="field-{{msg.0}}-msg">
+          <div class="has-text-success"> {% if msg %} <small class="field-{{msg.0}}-msg">
                 {{msg.1}}
                 </small> {% endif %} </div>
         </form>
+
       </div>
     </div>
   </div>

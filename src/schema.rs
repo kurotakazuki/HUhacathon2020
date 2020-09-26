@@ -3,5 +3,6 @@ table! {
         id -> Int4,
         title -> Varchar,
         participants -> Varchar,
+        schedule -> Varchar,
     }
 }

@@ -35,6 +35,7 @@ pub async fn index(
 #[derive(Deserialize)]
 pub struct CreateForm {
     title: String,
+    schedule: String,
 }
 
 pub async fn create(
@@ -45,13 +46,19 @@ pub async fn create(
     if params.title.is_empty() {
         session::set_flash(
             &session,
-            FlashMessage::error("title cannot be empty"),
+            FlashMessage::error("タイトルを入力してください"),
         )?;
         Ok(redirect_to("/"))
+    } else if params.schedule == "2020-09-26T08:30" {
+        session::set_flash(
+            &session,
+            FlashMessage::error("日付を選択してください"),
+        )?;
+        Ok(redirect_to("/"))        
     } else {
-        web::block(move || db::create_task(params.into_inner().title, &pool))
+        web::block(move || db::create_task(params.title.clone(), params.into_inner().schedule, &pool))
             .await?;
-        session::set_flash(&session, FlashMessage::success("Task successfully added"))?;
+        session::set_flash(&session, FlashMessage::success("募集を開始しました"))?;
         Ok(redirect_to("/"))
     }
 }
